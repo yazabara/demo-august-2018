@@ -3,6 +3,7 @@ dbSchema: yazabara
 logging:
   level:
     org.hibernate: 'ERROR'
+    com.yazabara: 'WARN'
 
 spring:
   liquibase:

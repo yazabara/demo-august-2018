@@ -1,10 +1,11 @@
 package com.yazabara.demoaugust2018.controller;
 
-import com.yazabara.demoaugust2018.model.db.DbUser;
 import com.yazabara.demoaugust2018.model.web.WebUser;
 import com.yazabara.demoaugust2018.service.UserAccessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
 
 @RestController
 @RequestMapping(value = "/v1/user")
@@ -18,16 +19,12 @@ public class UserControllerV1 {
     }
 
     @PostMapping("/add")
-    public DbUser start(@RequestBody WebUser user) {
-        return userAccessService
-                .addUser(new DbUser()
-                        .withName(user.getName())
-                        .withPassword(user.getPassword())
-                );
+    public WebUser start(@RequestBody WebUser user) {
+        return userAccessService.addUser(user);
     }
 
     @GetMapping("/list")
-    public Iterable<DbUser> list() {
+    public Collection<WebUser> list() {
         return userAccessService.list();
     }
 }
