@@ -1,5 +1,6 @@
 package com.yazabara.demoaugust2018.service;
 
+import com.yazabara.demoaugust2018.config.SecurityRoles;
 import com.yazabara.demoaugust2018.model.db.DbUser;
 import com.yazabara.demoaugust2018.model.web.WebUser;
 import com.yazabara.demoaugust2018.repo.UserRepository;
@@ -18,9 +19,12 @@ public class UserAccessService {
     private final UserRepository userRepository;
 
     @PostConstruct
-    public void baseUser() {
+    public void testUsers() {
+        //TODO TEST users
         DbUser user = new DbUser().withName("user").withPassword("user");
+        DbUser admin = new DbUser().withName("admin").withPassword("admin").withRole(SecurityRoles.ADMIN);
         userRepository.save(user);
+        userRepository.save(admin);
     }
 
     @Autowired
@@ -35,13 +39,14 @@ public class UserAccessService {
         );
 
         webUser.setId(save.getId());
+        webUser.setRole(save.getRole());
         return webUser;
     }
 
     public Collection<WebUser> list() {
         return StreamSupport
                 .stream(userRepository.findAll().spliterator(), false)
-                .map(dbUser -> new WebUser(dbUser.getId(), dbUser.getName(), dbUser.getPassword()))
+                .map(dbUser -> new WebUser(dbUser.getId(), dbUser.getName(), dbUser.getPassword(), dbUser.getRole()))
                 .collect(Collectors.toCollection(HashSet::new));
     }
 }

@@ -1,8 +1,9 @@
 package com.yazabara.demoaugust2018.model.db;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.yazabara.demoaugust2018.config.SecurityRoles;
 import lombok.Data;
 import lombok.ToString;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
 
@@ -22,13 +23,27 @@ public class DbUser {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private String role = SecurityRoles.USER;
+
     public DbUser withName(String name) {
-        this.name = name;
+        if (StringUtils.isNotBlank(name)) {
+            this.name = name;
+        }
         return this;
     }
 
     public DbUser withPassword(String password) {
-        this.password = password;
+        if (StringUtils.isNotBlank(password)) {
+            this.password = password;
+        }
+        return this;
+    }
+
+    public DbUser withRole(String role) {
+        if (SecurityRoles.roles().contains(role)) {
+            this.role = role;
+        }
         return this;
     }
 }

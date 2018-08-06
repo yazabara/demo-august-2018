@@ -43,7 +43,7 @@ public class WebUserDetailsService implements UserDetailsService {
         return userBuilder
                 .username(user.getName())
                 .password(user.getPassword())
-                .roles("USER")
+                .roles(user.getRole())
                 .build();
     }
 }

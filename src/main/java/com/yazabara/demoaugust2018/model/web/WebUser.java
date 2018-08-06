@@ -22,4 +22,7 @@ public class WebUser {
     @JsonSerialize(using = PasswordSerializer.class)
     @JsonDeserialize(using = PasswordDeserializer.class)
     private String password;
+
+    @EqualsAndHashCode.Exclude
+    private String role;
 }
