@@ -1,6 +1,9 @@
 package com.yazabara.demoaugust2018.model.web;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.yazabara.demoaugust2018.service.json.PasswordDeserializer;
+import com.yazabara.demoaugust2018.service.json.PasswordSerializer;
 import lombok.*;
 
 @Data
@@ -15,7 +18,8 @@ public class WebUser {
     @EqualsAndHashCode.Exclude
     private String name;
 
-    @JsonIgnore
     @EqualsAndHashCode.Exclude
+    @JsonSerialize(using = PasswordSerializer.class)
+    @JsonDeserialize(using = PasswordDeserializer.class)
     private String password;
 }
