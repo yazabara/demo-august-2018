@@ -4,6 +4,7 @@ import com.yazabara.demoaugust2018.config.SecurityRoles;
 import com.yazabara.demoaugust2018.model.db.DbUser;
 import com.yazabara.demoaugust2018.model.web.WebUser;
 import com.yazabara.demoaugust2018.repo.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
+@Slf4j
 public class UserAccessService {
 
     private final UserRepository userRepository;
@@ -40,6 +42,8 @@ public class UserAccessService {
 
         webUser.setId(save.getId());
         webUser.setRole(save.getRole());
+
+        log.info("New user {} added into application storage", webUser);
         return webUser;
     }
 
