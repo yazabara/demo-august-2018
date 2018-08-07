@@ -5,5 +5,6 @@
 
 
     <include file="migrations/migration-2018-08-05-create-user-table.xml" relativeToChangelogFile="true"/>
+    <include file="migrations/migration-2018-08-07-create-trainings-table.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

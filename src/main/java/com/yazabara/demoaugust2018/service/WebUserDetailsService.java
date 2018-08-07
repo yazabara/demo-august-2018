@@ -28,20 +28,15 @@ public class WebUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-
         log.info("User  with {} try login", s);
-
-        Optional<DbUser> byName = userRepository.findByName(s);
+        Optional<DbUser> byName = userRepository.findByUsername(s);
         if (!byName.isPresent()) {
             throw new UsernameNotFoundException(s);
         }
-
         final User.UserBuilder userBuilder = User.builder().passwordEncoder(encoder::encode);
-
         DbUser user = byName.get();
-
         return userBuilder
-                .username(user.getName())
+                .username(user.getUsername())
                 .password(user.getPassword())
                 .roles(user.getRole())
                 .build();

@@ -5,6 +5,7 @@ logging:
     org.hibernate: 'ERROR'
     com.yazabara: 'INFO'
 
+
 spring:
   liquibase:
     change-log: classpath:db/changelog/db.changelog.xml
@@ -18,6 +19,9 @@ spring:
     database: h2
     properties:
       hibernate.default_schema: ${dbSchema}
+#    hibernate:
+#      ddl-auto: create-drop
+    show-sql: true
   datasource:
     driver-class-name: org.h2.Driver
     username: sa

@@ -6,12 +6,16 @@ import com.yazabara.demoaugust2018.service.json.PasswordDeserializer;
 import com.yazabara.demoaugust2018.service.json.PasswordSerializer;
 import lombok.*;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class WebUser {
+public class WebUser implements Serializable {
 
     private Integer id;
 
@@ -25,4 +29,7 @@ public class WebUser {
 
     @EqualsAndHashCode.Exclude
     private String role;
+
+    @EqualsAndHashCode.Exclude
+    private List<WebTraining> trainings = new ArrayList<>();
 }

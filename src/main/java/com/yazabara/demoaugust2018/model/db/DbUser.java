@@ -4,8 +4,12 @@ import com.yazabara.demoaugust2018.config.SecurityRoles;
 import lombok.Data;
 import lombok.ToString;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -15,10 +19,10 @@ public class DbUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer userId;
 
     @Column(nullable = false, unique = true)
-    private String name;
+    private String username;
 
     @Column(nullable = false)
     private String password;
@@ -26,9 +30,12 @@ public class DbUser {
     @Column(nullable = false)
     private String role = SecurityRoles.USER;
 
-    public DbUser withName(String name) {
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "owner")
+    private List<DbTraining> trainings = new ArrayList<>();
+
+    public DbUser withUsername(String name) {
         if (StringUtils.isNotBlank(name)) {
-            this.name = name;
+            this.username = name;
         }
         return this;
     }
@@ -43,6 +50,13 @@ public class DbUser {
     public DbUser withRole(String role) {
         if (SecurityRoles.roles().contains(role)) {
             this.role = role;
+        }
+        return this;
+    }
+
+    public DbUser withTrainings(Collection<DbTraining> trainings) {
+        if (!CollectionUtils.isEmpty(trainings)) {
+            this.trainings.addAll(trainings);
         }
         return this;
     }
