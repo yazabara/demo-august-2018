@@ -1,6 +1,6 @@
 package com.yazabara.demoaugust2018.service;
 
-import com.yazabara.demoaugust2018.config.SecurityRoles;
+import com.yazabara.demoaugust2018.config.security.SecurityRoles;
 import com.yazabara.demoaugust2018.model.db.DbTraining;
 import com.yazabara.demoaugust2018.model.db.DbUser;
 import com.yazabara.demoaugust2018.model.web.WebTraining;

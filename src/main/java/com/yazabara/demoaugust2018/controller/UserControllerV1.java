@@ -1,6 +1,6 @@
 package com.yazabara.demoaugust2018.controller;
 
-import com.yazabara.demoaugust2018.config.SecurityRoles;
+import com.yazabara.demoaugust2018.config.security.SecurityRoles;
 import com.yazabara.demoaugust2018.model.web.WebUser;
 import com.yazabara.demoaugust2018.service.UserAccessService;
 import org.springframework.beans.factory.annotation.Autowired;

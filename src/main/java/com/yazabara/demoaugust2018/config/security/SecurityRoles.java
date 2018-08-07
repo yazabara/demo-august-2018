@@ -1,4 +1,4 @@
-package com.yazabara.demoaugust2018.config;
+package com.yazabara.demoaugust2018.config.security;
 
 import java.util.List;
 import java.util.stream.Collectors;

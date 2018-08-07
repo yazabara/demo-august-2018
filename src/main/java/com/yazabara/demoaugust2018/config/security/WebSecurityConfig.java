@@ -1,4 +1,4 @@
-package com.yazabara.demoaugust2018.config;
+package com.yazabara.demoaugust2018.config.security;
 
 import com.yazabara.demoaugust2018.service.WebUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;

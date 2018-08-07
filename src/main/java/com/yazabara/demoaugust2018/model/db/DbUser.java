@@ -1,6 +1,6 @@
 package com.yazabara.demoaugust2018.model.db;
 
-import com.yazabara.demoaugust2018.config.SecurityRoles;
+import com.yazabara.demoaugust2018.config.security.SecurityRoles;
 import lombok.Data;
 import lombok.ToString;
 import org.apache.commons.lang3.StringUtils;

@@ -1,4 +1,4 @@
-package com.yazabara.demoaugust2018.config;
+package com.yazabara.demoaugust2018.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
