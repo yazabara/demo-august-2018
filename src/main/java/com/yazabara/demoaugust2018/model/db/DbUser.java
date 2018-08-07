@@ -30,7 +30,7 @@ public class DbUser {
     @Column(nullable = false)
     private String role = SecurityRoles.USER;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "owner")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "owner")
     private List<DbTraining> trainings = new ArrayList<>();
 
     public DbUser withUsername(String name) {
