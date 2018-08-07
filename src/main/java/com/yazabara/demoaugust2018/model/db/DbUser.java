@@ -2,6 +2,7 @@ package com.yazabara.demoaugust2018.model.db;
 
 import com.yazabara.demoaugust2018.config.security.SecurityRoles;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
@@ -15,6 +16,7 @@ import java.util.List;
 @Table(name = "user")
 @Data
 @ToString
+@EqualsAndHashCode
 public class DbUser {
 
     @Id
@@ -22,15 +24,19 @@ public class DbUser {
     private Integer userId;
 
     @Column(nullable = false, unique = true)
+    @EqualsAndHashCode.Exclude
     private String username;
 
     @Column(nullable = false)
+    @EqualsAndHashCode.Exclude
     private String password;
 
     @Column(nullable = false)
+    @EqualsAndHashCode.Exclude
     private String role = SecurityRoles.USER;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "owner")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "owner", orphanRemoval = true)
+    @EqualsAndHashCode.Exclude
     private List<DbTraining> trainings = new ArrayList<>();
 
     public DbUser withUsername(String name) {

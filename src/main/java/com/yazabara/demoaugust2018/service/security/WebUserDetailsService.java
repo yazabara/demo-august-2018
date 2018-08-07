@@ -1,4 +1,4 @@
-package com.yazabara.demoaugust2018.service;
+package com.yazabara.demoaugust2018.service.security;
 
 import com.yazabara.demoaugust2018.model.db.DbUser;
 import com.yazabara.demoaugust2018.repo.UserRepository;

@@ -4,7 +4,8 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
 
-    <include file="migrations/migration-2018-08-05-create-user-table.xml" relativeToChangelogFile="true"/>
-    <include file="migrations/migration-2018-08-07-create-trainings-table.xml" relativeToChangelogFile="true"/>
+    <include file="migrations/migration-2018-08-05-01-create-user-table.xml" relativeToChangelogFile="true"/>
+    <include file="migrations/migration-2018-08-07-01-create-trainings-table.xml" relativeToChangelogFile="true"/>
+    <include file="migrations/migration-2018-08-07-02-create-exercise-table.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

@@ -3,7 +3,9 @@ package com.yazabara.demoaugust2018.model.web;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @ToString
@@ -19,4 +21,7 @@ public class WebTraining implements Serializable {
 
     @EqualsAndHashCode.Exclude
     private Date date;
+
+    @EqualsAndHashCode.Exclude
+    private List<WebExercise> exercises = new ArrayList<>();
 }

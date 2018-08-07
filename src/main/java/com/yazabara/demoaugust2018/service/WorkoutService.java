@@ -1,16 +1,15 @@
 package com.yazabara.demoaugust2018.service;
 
-import com.yazabara.demoaugust2018.config.security.SecurityRoles;
+import com.yazabara.demoaugust2018.exceptions.UserNotFoundException;
 import com.yazabara.demoaugust2018.model.db.DbTraining;
 import com.yazabara.demoaugust2018.model.db.DbUser;
-import com.yazabara.demoaugust2018.model.web.WebTraining;
 import com.yazabara.demoaugust2018.model.web.WebUser;
 import com.yazabara.demoaugust2018.repo.UserRepository;
+import com.yazabara.demoaugust2018.service.converter.UserConverterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -18,30 +17,15 @@ import java.util.stream.StreamSupport;
 
 @Service
 @Slf4j
-public class UserAccessService {
+public class WorkoutService {
 
     private final UserRepository userRepository;
-
-    @PostConstruct
-    public void testUsers() {
-        //TODO TEST users
-        DbUser user = new DbUser().withUsername("user").withPassword("user");
-        DbUser admin = new DbUser().withUsername("admin").withPassword("admin").withRole(SecurityRoles.ADMIN);
-        DbUser save = userRepository.save(user);
-        DbUser save1 = userRepository.save(admin);
-        // test trainings
-        DbTraining training = new DbTraining();
-        training.setDate(new Date());
-        training.setName("First training");
-        training.setOwner(save);
-        addTrainings(Collections.singletonList(training), save.getUserId());
-        training.setOwner(save1);
-        addTrainings(Collections.singletonList(training), save1.getUserId());
-    }
+    private final UserConverterService converterService;
 
     @Autowired
-    public UserAccessService(UserRepository userRepository) {
+    public WorkoutService(UserRepository userRepository, UserConverterService converterService) {
         this.userRepository = userRepository;
+        this.converterService = converterService;
     }
 
     public WebUser addUser(WebUser webUser) {
@@ -57,17 +41,19 @@ public class UserAccessService {
         return webUser;
     }
 
+    public WebUser getUserDataById(Integer id) {
+        Optional<DbUser> byId = userRepository.findById(id);
+        if (!byId.isPresent()) {
+            log.error("No user found for id = {}");
+            throw new UserNotFoundException(id);
+        }
+        return converterService.convertToWeb(byId.get());
+    }
+
     public Collection<WebUser> list() {
         return StreamSupport
                 .stream(userRepository.findAll().spliterator(), false)
-                .map(dbUser -> {
-                    List<WebTraining> trainings = dbUser
-                            .getTrainings()
-                            .stream()
-                            .map(dbTraining -> new WebTraining(dbTraining.getTrainingId(), dbTraining.getName(), dbTraining.getDate()))
-                            .collect(Collectors.toList());
-                    return new WebUser(dbUser.getUserId(), dbUser.getUsername(), dbUser.getPassword(), dbUser.getRole(), trainings);
-                })
+                .map(converterService::convertToWeb)
                 .collect(Collectors.toCollection(HashSet::new));
     }
 
@@ -79,6 +65,17 @@ public class UserAccessService {
             return;
         }
         DbUser save = userRepository.save(byId.get().withTrainings(trainings));
+        log.info("Trainings added for user {}", save);
+    }
+
+    @Transactional
+    public void addTraining(DbTraining trainings, Integer userId) {
+        Optional<DbUser> byId = userRepository.findById(userId);
+        if (!byId.isPresent()) {
+            log.info("No user found for id = {}");
+            return;
+        }
+        DbUser save = userRepository.save(byId.get().withTrainings(Collections.singleton(trainings)));
         log.info("Trainings added for user {}", save);
     }
 }
