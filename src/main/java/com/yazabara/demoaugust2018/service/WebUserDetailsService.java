@@ -28,7 +28,7 @@ public class WebUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        log.info("User  with {} try login", s);
+        log.info("User {} try login", s);
         Optional<DbUser> byName = userRepository.findByUsername(s);
         if (!byName.isPresent()) {
             throw new UsernameNotFoundException(s);
