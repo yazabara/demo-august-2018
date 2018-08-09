@@ -1,8 +1,7 @@
 package com.yazabara.demoaugust2018.model.db;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,6 +10,8 @@ import javax.persistence.*;
 @Data
 @ToString(exclude = "training")
 @EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
 public class DbExercise {
 
     @Id
@@ -27,5 +28,6 @@ public class DbExercise {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "training_id", nullable = false)
     @EqualsAndHashCode.Exclude
+    @JsonIgnore
     private DbTraining training;
 }

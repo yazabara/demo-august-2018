@@ -33,14 +33,23 @@ public class TestDataInitializerService {
         DbTraining training = new DbTraining();
         training.setDate(new Date());
         training.setName("First training");
-        training.setOwner(save);
         DbExercise dbExercise1 = new DbExercise();
         dbExercise1.setDescription("first exercise");
         dbExercise1.setName("Jiiiim bleat");
         dbExercise1.setTraining(training);
-        training.getWorkoutSets().add(dbExercise1);
-        workoutService.addTrainings(Collections.singletonList(training), save.getUserId());
-        training.setOwner(save1);
-        workoutService.addTrainings(Collections.singletonList(training), save1.getUserId());
+        training.getExercises().add(dbExercise1);
+        workoutService.addTrainings(save.getUserId(), training);
+        workoutService.addTrainings(save1.getUserId(), training);
+
+        DbTraining webTraining = new DbTraining();
+        webTraining.setDate(new Date());
+        webTraining.setName("Stanovaya bleat");
+
+        DbExercise webExercise = new DbExercise();
+        webExercise.setName("podhod1");
+        webExercise.setTraining(webTraining);
+        webTraining.setExercises(Collections.singletonList(webExercise));
+
+        workoutService.addTrainings(1, webTraining);
     }
 }

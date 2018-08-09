@@ -1,9 +1,11 @@
 package com.yazabara.demoaugust2018.model.db;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yazabara.demoaugust2018.config.security.SecurityRoles;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import com.yazabara.demoaugust2018.service.json.PasswordDeserializer;
+import com.yazabara.demoaugust2018.service.json.PasswordSerializer;
+import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
@@ -17,6 +19,8 @@ import java.util.List;
 @Data
 @ToString
 @EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
 public class DbUser {
 
     @Id
@@ -28,6 +32,8 @@ public class DbUser {
     private String username;
 
     @Column(nullable = false)
+    @JsonSerialize(using = PasswordSerializer.class)
+    @JsonDeserialize(using = PasswordDeserializer.class)
     @EqualsAndHashCode.Exclude
     private String password;
 
