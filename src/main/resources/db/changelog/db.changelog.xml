@@ -7,5 +7,6 @@
     <include file="migrations/migration-2018-08-05-01-create-user-table.xml" relativeToChangelogFile="true"/>
     <include file="migrations/migration-2018-08-07-01-create-trainings-table.xml" relativeToChangelogFile="true"/>
     <include file="migrations/migration-2018-08-07-02-create-exercise-table.xml" relativeToChangelogFile="true"/>
+    <include file="migrations/migration-2018-08-09-01-create-workout-set-table.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

@@ -5,6 +5,7 @@ import com.yazabara.demoaugust2018.config.security.SecurityRoles;
 import com.yazabara.demoaugust2018.model.db.DbExercise;
 import com.yazabara.demoaugust2018.model.db.DbTraining;
 import com.yazabara.demoaugust2018.model.db.DbUser;
+import com.yazabara.demoaugust2018.model.db.DbWorkoutSet;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -51,6 +52,16 @@ public class TestDataInitializerService {
                         .withName("Stanovay bleat")
                         .withDescription("Base exercise")
                         .withTraining(training)
+                        .withWorkoutSets(Arrays.asList(
+                                new DbWorkoutSet()
+                                        .withDuration(10)
+                                        .withWeight(100)
+                                        .withRepetitions(6),
+                                new DbWorkoutSet()
+                                        .withDuration(10)
+                                        .withWeight(120)
+                                        .withRepetitions(7)
+                        ))
         ));
         workoutService.addUser(new DbUser().withUsername("user").withPassword("user").withTrainings(Collections.singletonList(training)));
     }

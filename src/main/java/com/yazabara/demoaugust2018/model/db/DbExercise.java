@@ -3,8 +3,12 @@ package com.yazabara.demoaugust2018.model.db;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "exercise")
@@ -26,11 +30,15 @@ public class DbExercise {
     @EqualsAndHashCode.Exclude
     private String description;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "training_id", nullable = false)
     @EqualsAndHashCode.Exclude
     @JsonIgnore
     private DbTraining training;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "exercise", orphanRemoval = true)
+    @EqualsAndHashCode.Exclude
+    private List<DbWorkoutSet> workoutSets = new ArrayList<>();
 
     public DbExercise withId(Integer id) {
         if (id != null) {
@@ -56,6 +64,13 @@ public class DbExercise {
     public DbExercise withTraining(DbTraining training) {
         if (training != null) {
             setTraining(training);
+        }
+        return this;
+    }
+
+    public DbExercise withWorkoutSets(Collection<DbWorkoutSet> workoutSets) {
+        if (!CollectionUtils.isEmpty(workoutSets)) {
+            this.workoutSets.addAll(workoutSets);
         }
         return this;
     }

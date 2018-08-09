@@ -26,7 +26,13 @@ public class WorkoutService {
 
     public DbUser addUser(DbUser user) {
         //double check (db integrity)
-        user.getTrainings().forEach(training -> training.setOwner(user));
+        user.getTrainings().forEach(training -> {
+            training.setOwner(user);
+            training.getExercises().forEach(dbExercise -> {
+                dbExercise.setTraining(training);
+                dbExercise.getWorkoutSets().forEach(dbWorkoutSet -> dbWorkoutSet.setExercise(dbExercise));
+            });
+        });
         DbUser save = userRepository.save(user);
         log.info("New user {} added into application storage", save);
         return save;

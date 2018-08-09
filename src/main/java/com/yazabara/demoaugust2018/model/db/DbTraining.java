@@ -29,7 +29,7 @@ public class DbTraining {
     @EqualsAndHashCode.Exclude
     private Date date;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @EqualsAndHashCode.Exclude
     @JsonIgnore
