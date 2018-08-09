@@ -9,11 +9,11 @@ import org.springframework.context.annotation.Profile;
 
 @Profile("test")
 @Configuration
-public class UserRepositoryTestConfig {
+public class TestConfig {
 
     @Bean
     @Primary
-    public UserRepository nameService() {
+    public UserRepository userRepository() {
         return Mockito.mock(UserRepository.class);
     }
 }
