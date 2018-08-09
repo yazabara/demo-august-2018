@@ -2,6 +2,7 @@ package com.yazabara.demoaugust2018.model.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -40,6 +41,20 @@ public class DbTraining {
 
     public DbTraining withOwner(DbUser user) {
         setOwner(user);
+        return this;
+    }
+
+    public DbTraining withDate(Date date) {
+        if (date != null) {
+            setDate(date);
+        }
+        return this;
+    }
+
+    public DbTraining withName(String name) {
+        if (StringUtils.isNotBlank(name)) {
+            setName(name);
+        }
         return this;
     }
 }

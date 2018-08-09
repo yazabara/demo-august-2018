@@ -1,5 +1,8 @@
 dbSchema: yazabara
 
+app:
+  use-test-data: true
+
 logging:
   level:
     org.hibernate: 'ERROR'

@@ -1,13 +1,14 @@
 package com.yazabara.demoaugust2018.service;
 
+import com.yazabara.demoaugust2018.config.app.WorkoutAppConfig;
 import com.yazabara.demoaugust2018.config.security.SecurityRoles;
 import com.yazabara.demoaugust2018.model.db.DbExercise;
 import com.yazabara.demoaugust2018.model.db.DbTraining;
 import com.yazabara.demoaugust2018.model.db.DbUser;
-import com.yazabara.demoaugust2018.repo.UserRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 
@@ -15,41 +16,42 @@ import java.util.Date;
 @Service
 public class TestDataInitializerService {
 
-    private final UserRepository userRepository;
+    private final WorkoutAppConfig appConfig;
     private final WorkoutService workoutService;
 
-    public TestDataInitializerService(UserRepository userRepository, WorkoutService workoutService) {
-        this.userRepository = userRepository;
+    public TestDataInitializerService(WorkoutAppConfig appConfig, WorkoutService workoutService) {
+        this.appConfig = appConfig;
         this.workoutService = workoutService;
     }
 
-//    @PostConstruct
-//    public void testUsers() {
-//        DbUser user = new DbUser().withUsername("user").withPassword("user");
-//        DbUser admin = new DbUser().withUsername("admin").withPassword("admin").withRole(SecurityRoles.ADMIN);
-//        DbUser save = userRepository.save(user);
-//        DbUser save1 = userRepository.save(admin);
-//        // test trainings
-//        DbTraining training = new DbTraining();
-//        training.setDate(new Date());
-//        training.setName("First training");
-//        DbExercise dbExercise1 = new DbExercise();
-//        dbExercise1.setDescription("first exercise");
-//        dbExercise1.setName("Jiiiim bleat");
-//        dbExercise1.setTraining(training);
-//        training.getExercises().add(dbExercise1);
-//        workoutService.addTrainings(save.getUserId(), training);
-//        workoutService.addTrainings(save1.getUserId(), training);
-//
-//        DbTraining webTraining = new DbTraining();
-//        webTraining.setDate(new Date());
-//        webTraining.setName("Stanovaya bleat");
-//
-//        DbExercise webExercise = new DbExercise();
-//        webExercise.setName("podhod1");
-//        webExercise.setTraining(webTraining);
-//        webTraining.setExercises(Collections.singletonList(webExercise));
-//
-//        workoutService.addTrainings(1, webTraining);
-//    }
+    @PostConstruct
+    public void testUsers() {
+        if (!appConfig.getUseTestData()) {
+            return;
+        }
+        addAdmin();
+        addUserWithTrainings();
+    }
+
+    private void addAdmin() {
+        workoutService.addUser(new DbUser().withUsername("admin").withPassword("admin").withRole(SecurityRoles.ADMIN));
+    }
+
+    private void addUserWithTrainings() {
+        DbTraining training = new DbTraining()
+                .withName("First training")
+                .withDate(new Date());
+
+        training.setExercises(Arrays.asList(
+                new DbExercise()
+                        .withName("Jim bleat")
+                        .withDescription("Base exercise")
+                        .withTraining(training),
+                new DbExercise()
+                        .withName("Stanovay bleat")
+                        .withDescription("Base exercise")
+                        .withTraining(training)
+        ));
+        workoutService.addUser(new DbUser().withUsername("user").withPassword("user").withTrainings(Collections.singletonList(training)));
+    }
 }

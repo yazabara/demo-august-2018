@@ -47,28 +47,28 @@ public class DbUser {
 
     public DbUser withUsername(String name) {
         if (StringUtils.isNotBlank(name)) {
-            this.username = name;
+            setUsername(name);
         }
         return this;
     }
 
     public DbUser withId(Integer id) {
         if (id != null) {
-            this.userId = id;
+            setUserId(id);
         }
         return this;
     }
 
     public DbUser withPassword(String password) {
         if (StringUtils.isNotBlank(password)) {
-            this.password = password;
+            setPassword(password);
         }
         return this;
     }
 
     public DbUser withRole(String role) {
         if (SecurityRoles.roles().contains(role)) {
-            this.role = role;
+            setRole(role);
         }
         return this;
     }
