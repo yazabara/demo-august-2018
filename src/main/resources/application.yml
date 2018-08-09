@@ -14,6 +14,14 @@ spring:
     change-log: classpath:db/changelog/db.changelog.xml
     parameters:
       dbSchema: ${dbSchema}
+  thymeleaf:
+    check-template-location: true
+    prefix: classpath:/WEB-INF/views/
+    suffix: .html
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    cache: false
   h2:
     console:
       enabled: true
