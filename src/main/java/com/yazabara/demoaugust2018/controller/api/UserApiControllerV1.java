@@ -5,6 +5,7 @@ import com.yazabara.demoaugust2018.model.db.DbTraining;
 import com.yazabara.demoaugust2018.model.db.DbUser;
 import com.yazabara.demoaugust2018.service.WorkoutService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
@@ -28,13 +29,14 @@ public class UserApiControllerV1 {
     }
 
     @PostMapping("/add-training/{userId}")
-    @RolesAllowed(SecurityRoles.USER)
+    @RolesAllowed({SecurityRoles.USER, SecurityRoles.ADMIN})
+    @PreAuthorize("@workoutService.getUserDataById(#userId).getUsername()==principal.username")
     public DbUser addTraining(@PathVariable("userId") Integer userId, @RequestBody DbTraining training) {
         return workoutService.addTrainings(userId, training);
     }
 
     @GetMapping("/list")
-    @RolesAllowed(SecurityRoles.USER)
+    @RolesAllowed({SecurityRoles.USER, SecurityRoles.ADMIN})
     public Collection<DbUser> list() {
         return workoutService.list();
     }
