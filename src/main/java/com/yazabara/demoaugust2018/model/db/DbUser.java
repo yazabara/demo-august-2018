@@ -52,6 +52,13 @@ public class DbUser {
         return this;
     }
 
+    public DbUser withId(Integer id) {
+        if (id != null) {
+            this.userId = id;
+        }
+        return this;
+    }
+
     public DbUser withPassword(String password) {
         if (StringUtils.isNotBlank(password)) {
             this.password = password;

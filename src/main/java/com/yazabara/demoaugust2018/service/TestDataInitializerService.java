@@ -23,33 +23,33 @@ public class TestDataInitializerService {
         this.workoutService = workoutService;
     }
 
-    @PostConstruct
-    public void testUsers() {
-        DbUser user = new DbUser().withUsername("user").withPassword("user");
-        DbUser admin = new DbUser().withUsername("admin").withPassword("admin").withRole(SecurityRoles.ADMIN);
-        DbUser save = userRepository.save(user);
-        DbUser save1 = userRepository.save(admin);
-        // test trainings
-        DbTraining training = new DbTraining();
-        training.setDate(new Date());
-        training.setName("First training");
-        DbExercise dbExercise1 = new DbExercise();
-        dbExercise1.setDescription("first exercise");
-        dbExercise1.setName("Jiiiim bleat");
-        dbExercise1.setTraining(training);
-        training.getExercises().add(dbExercise1);
-        workoutService.addTrainings(save.getUserId(), training);
-        workoutService.addTrainings(save1.getUserId(), training);
-
-        DbTraining webTraining = new DbTraining();
-        webTraining.setDate(new Date());
-        webTraining.setName("Stanovaya bleat");
-
-        DbExercise webExercise = new DbExercise();
-        webExercise.setName("podhod1");
-        webExercise.setTraining(webTraining);
-        webTraining.setExercises(Collections.singletonList(webExercise));
-
-        workoutService.addTrainings(1, webTraining);
-    }
+//    @PostConstruct
+//    public void testUsers() {
+//        DbUser user = new DbUser().withUsername("user").withPassword("user");
+//        DbUser admin = new DbUser().withUsername("admin").withPassword("admin").withRole(SecurityRoles.ADMIN);
+//        DbUser save = userRepository.save(user);
+//        DbUser save1 = userRepository.save(admin);
+//        // test trainings
+//        DbTraining training = new DbTraining();
+//        training.setDate(new Date());
+//        training.setName("First training");
+//        DbExercise dbExercise1 = new DbExercise();
+//        dbExercise1.setDescription("first exercise");
+//        dbExercise1.setName("Jiiiim bleat");
+//        dbExercise1.setTraining(training);
+//        training.getExercises().add(dbExercise1);
+//        workoutService.addTrainings(save.getUserId(), training);
+//        workoutService.addTrainings(save1.getUserId(), training);
+//
+//        DbTraining webTraining = new DbTraining();
+//        webTraining.setDate(new Date());
+//        webTraining.setName("Stanovaya bleat");
+//
+//        DbExercise webExercise = new DbExercise();
+//        webExercise.setName("podhod1");
+//        webExercise.setTraining(webTraining);
+//        webTraining.setExercises(Collections.singletonList(webExercise));
+//
+//        workoutService.addTrainings(1, webTraining);
+//    }
 }
