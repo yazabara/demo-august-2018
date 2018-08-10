@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'Archive Font';
+    src: url('fonts/Archive.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    background-color: darkturquoise;
+    font-family: 'Archive Font';
+}

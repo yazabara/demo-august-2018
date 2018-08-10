@@ -8,7 +8,6 @@ logging:
     org.hibernate: 'ERROR'
     com.yazabara: 'INFO'
 
-
 spring:
   liquibase:
     change-log: classpath:db/changelog/db.changelog.xml
@@ -16,7 +15,6 @@ spring:
       dbSchema: ${dbSchema}
   thymeleaf:
     check-template-location: true
-    prefix: classpath:/WEB-INF/views/
     suffix: .html
     encoding: UTF-8
     servlet:
@@ -31,8 +29,6 @@ spring:
     properties:
       hibernate.default_schema: ${dbSchema}
       hibernate.enable_lazy_load_no_trans: true
-#    hibernate:
-#      ddl-auto: create-drop
     show-sql: true
   datasource:
     driver-class-name: org.h2.Driver
