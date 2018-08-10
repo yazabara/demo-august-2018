@@ -1,19 +1,19 @@
 package com.yazabara.demoaugust2018.config;
 
-import com.yazabara.demoaugust2018.service.WorkoutService;
+import com.yazabara.demoaugust2018.repo.UserRepository;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 
-@Profile("web-test")
+@Profile("workout-service")
 @Configuration
-public class WebTestConfig {
+public class WorkoutServiceTestConfig {
 
-    @Bean
+    @Bean(name = "userRepositoryMock")
     @Primary
-    public WorkoutService workoutService() {
-        return Mockito.mock(WorkoutService.class);
+    public UserRepository userRepository() {
+        return Mockito.mock(UserRepository.class);
     }
 }

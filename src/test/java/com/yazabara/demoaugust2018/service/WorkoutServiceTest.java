@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -19,7 +20,7 @@ import java.util.Optional;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-@ActiveProfiles("test")
+@ActiveProfiles("workout-service")
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = DemoAugust2018Application.class)
 public class WorkoutServiceTest {
@@ -28,6 +29,7 @@ public class WorkoutServiceTest {
     private WorkoutService workoutService;
 
     @Autowired
+    @Qualifier("userRepositoryMock")
     private UserRepository userRepository;
 
     @Test(expected = UserNotFoundException.class)
