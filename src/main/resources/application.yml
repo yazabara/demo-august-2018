@@ -8,6 +8,20 @@ logging:
     org.hibernate: 'ERROR'
     com.yazabara: 'INFO'
 
+security:
+  oauth2:
+    client:
+      clientId: 57cb6dca97af2b1e9ace
+      clientSecret: ffc9951ccd977280b7b07f296dc99504a078e7d4
+      accessTokenUri: https://github.com/login/oauth/access_token
+      userAuthorizationUri: https://github.com/login/oauth/authorize
+      tokenName: oauth_token
+      authenticationScheme: query
+      clientAuthenticationScheme: form
+    resource:
+        userInfoUri: https://api.github.com/user
+        preferTokenInfo: false
+
 spring:
   liquibase:
     change-log: classpath:db/changelog/db.changelog.xml

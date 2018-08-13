@@ -8,13 +8,36 @@
 
     <link th:href="@{/css/workout.css}" rel="stylesheet"/>
 
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
     <script type="text/javascript" th:src="@{/js/index.js}"></script>
 
     <title>Workout</title>
+
+
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            jQuery.get("/v1/api/user/principal", function (data) {
+                jQuery("#user").html(data);
+                jQuery(".unauthenticated").hide()
+                jQuery(".authenticated").show()
+            });
+        });
+    </script>
+
 </head>
 <body>
 <h2>
     <span th:text="'Time: ' + ${time}"></span>
+
+    <div class="container unauthenticated">
+        <div>
+            With Github: <a href="/login">click here</a>
+        </div>
+    </div>
+    <div class="container authenticated" style="display:none">
+        Logged in as: <span id="user"></span>
+    </div>
 </h2>
 </body>
 </html>

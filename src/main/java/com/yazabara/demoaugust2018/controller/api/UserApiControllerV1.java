@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
+import java.security.Principal;
 import java.util.Collection;
 
 @RestController
@@ -39,5 +40,10 @@ public class UserApiControllerV1 {
     @RolesAllowed({SecurityRoles.USER, SecurityRoles.ADMIN})
     public Collection<DbUser> list() {
         return workoutService.list();
+    }
+
+    @GetMapping("/principal")
+    public String principal(Principal principal) {
+        return principal.getName();
     }
 }
