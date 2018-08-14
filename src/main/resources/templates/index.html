@@ -8,9 +8,7 @@
 
     <link th:href="@{/css/workout.css}" rel="stylesheet"/>
 
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-
-    <script type="text/javascript" th:src="@{/js/index.js}"></script>
+    <script crossorigin src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
     <title>Workout</title>
 
@@ -37,18 +35,24 @@
 <body>
 <h2>
     <span th:text="'Time: ' + ${time}"></span>
-
-    <div class="container unauthenticated">
-        <div>
-            With Github: <a href="/login">click here</a>
-        </div>
-    </div>
-    <div class="container authenticated" style="display:none">
-        Logged in as: <span id="user"></span>
-        <div>
-            <button id="logout" class="btn btn-primary">Logout</button>
-        </div>
-    </div>
 </h2>
+<div class="container unauthenticated">
+    <div>
+        With Github: <a href="/login">click here</a>
+    </div>
+</div>
+<div class="container authenticated" style="display:none">
+    Logged in as: <span id="user"></span>
+    <div>
+        <button id="logout" class="btn btn-primary">Logout</button>
+    </div>
+</div>
+<div id="root"></div>
+
+<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+<script type="text/javascript" th:src="@{/js/index.js}"></script>
+
+
 </body>
 </html>
