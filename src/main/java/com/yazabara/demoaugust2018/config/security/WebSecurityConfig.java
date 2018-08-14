@@ -4,6 +4,7 @@ import com.yazabara.demoaugust2018.model.db.DbUser;
 import com.yazabara.demoaugust2018.repo.UserRepository;
 import com.yazabara.demoaugust2018.service.security.WebUserDetailsService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
@@ -66,8 +67,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             DbUser user;
             if (!byUsername.isPresent()) {
                 log.info("No user found, generating profile for {}", login);
-                //TODO generate temp password
-                user = userRepository.save(new DbUser().withUsername(login).withPassword(login));
+                user = userRepository.save(
+                        new DbUser()
+                                .withUsername(login)
+                                .withPassword(RandomStringUtils.random(8, true, true))
+                );
             } else {
                 log.info("User found: {}", byUsername.get());
                 user = byUsername.get();
