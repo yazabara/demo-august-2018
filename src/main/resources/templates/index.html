@@ -22,6 +22,14 @@
                 jQuery(".unauthenticated").hide()
                 jQuery(".authenticated").show()
             });
+
+            jQuery("#logout").click(function (event) {
+                jQuery.post("/logout", function () {
+                    jQuery("#user").html('');
+                    jQuery(".unauthenticated").show();
+                    jQuery(".authenticated").hide();
+                });
+            });
         });
     </script>
 
@@ -37,6 +45,9 @@
     </div>
     <div class="container authenticated" style="display:none">
         Logged in as: <span id="user"></span>
+        <div>
+            <button id="logout" class="btn btn-primary">Logout</button>
+        </div>
     </div>
 </h2>
 </body>

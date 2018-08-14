@@ -23,6 +23,10 @@ security:
         preferTokenInfo: false
 
 spring:
+  mvc:
+    view:
+      suffix: .html
+      prefix: classpath:templates/
   liquibase:
     change-log: classpath:db/changelog/db.changelog.xml
     parameters:

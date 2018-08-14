@@ -13,7 +13,6 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -73,12 +72,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 log.info("User found: {}", byUsername.get());
                 user = byUsername.get();
             }
-            final User.UserBuilder userBuilder = User.builder().passwordEncoder(encoder::encode);
-            return userBuilder
-                    .username(user.getUsername())
-                    .password(user.getPassword())
-                    .roles(user.getRole())
-                    .build();
+            return userDetailsService.createUserDetails(user);
         };
     }
 }

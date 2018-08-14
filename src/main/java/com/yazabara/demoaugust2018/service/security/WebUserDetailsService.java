@@ -33,8 +33,11 @@ public class WebUserDetailsService implements UserDetailsService {
         if (!byName.isPresent()) {
             throw new UsernameNotFoundException(s);
         }
+        return createUserDetails(byName.get());
+    }
+
+    public UserDetails createUserDetails(DbUser user) {
         final User.UserBuilder userBuilder = User.builder().passwordEncoder(encoder::encode);
-        DbUser user = byName.get();
         return userBuilder
                 .username(user.getUsername())
                 .password(user.getPassword())
