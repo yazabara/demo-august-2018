@@ -21,7 +21,7 @@ public class TrainingRestApiV1 {
 
     @PostMapping("/add/{userId}")
     @RolesAllowed({SecurityRoles.USER, SecurityRoles.ADMIN})
-    @PreAuthorize("@workoutService.getUserDataById(#userId).getUsername()==principal.username")
+    @PreAuthorize("@userAccountService.getUserDataById(#userId).getUsername()==principal.username")
     public DbUser addTraining(@PathVariable("userId") Integer userId, @RequestBody DbTraining training) {
         return workoutService.addTrainings(userId, training);
     }
