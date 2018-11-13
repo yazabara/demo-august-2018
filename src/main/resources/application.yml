@@ -1,13 +1,19 @@
-dbSchema: yazabara
-
+# application custom configuration
 app:
-  use-test-data: true
+  version: 1.0.0
+  dbSchema: yazabara
 
+# logging configuration
 logging:
   level:
     org.hibernate: 'ERROR'
     com.yazabara: 'INFO'
 
+# application port
+server:
+  port: 8089
+
+# oauth2 spring security configuration
 security:
   oauth2:
     client:
@@ -19,9 +25,10 @@ security:
       authenticationScheme: query
       clientAuthenticationScheme: form
     resource:
-        userInfoUri: https://api.github.com/user
-        preferTokenInfo: false
+      userInfoUri: https://api.github.com/user
+      preferTokenInfo: false
 
+# spring configuration
 spring:
   mvc:
     view:
@@ -30,7 +37,7 @@ spring:
   liquibase:
     change-log: classpath:db/changelog/db.changelog.xml
     parameters:
-      dbSchema: ${dbSchema}
+      dbSchema: ${app.dbSchema}
   thymeleaf:
     check-template-location: true
     suffix: .html
@@ -45,11 +52,11 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     database: h2
     properties:
-      hibernate.default_schema: ${dbSchema}
+      hibernate.default_schema: ${app.dbSchema}
       hibernate.enable_lazy_load_no_trans: true
     show-sql: true
   datasource:
     driver-class-name: org.h2.Driver
     username: sa
     password:
-    url: jdbc:h2:mem:yazdb;DB_CLOSE_ON_EXIT=FALSE;INIT=CREATE SCHEMA IF NOT EXISTS ${dbSchema};
+    url: jdbc:h2:mem:yazdb;DB_CLOSE_ON_EXIT=FALSE;INIT=CREATE SCHEMA IF NOT EXISTS ${app.dbSchema};

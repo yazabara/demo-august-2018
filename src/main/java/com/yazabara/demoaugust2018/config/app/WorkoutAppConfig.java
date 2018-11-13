@@ -15,5 +15,5 @@ import org.springframework.context.annotation.Configuration;
 @ToString
 public class WorkoutAppConfig {
 
-    private Boolean useTestData = false;
+    private String version;
 }

@@ -1,46 +1,41 @@
 var Example = function Example(props) {
     return React.createElement(
-        "div",
+        Reactstrap.Form,
         null,
         React.createElement(
-            Reactstrap.Alert,
-            {color: "primary"},
-            "This is a primary Reactstrap.Alert \u2014 check it out!"
+            Reactstrap.FormGroup,
+            null,
+            React.createElement(
+                Reactstrap.Label,
+                {"for": "username"},
+                "Email"
+            ),
+            React.createElement(Reactstrap.Input, {
+                type: "input",
+                name: "username",
+                id: "username",
+                placeholder: "enter your username"
+            })
         ),
         React.createElement(
-            Reactstrap.Alert,
-            {color: "secondary"},
-            "This is a secondary Reactstrap.Alert \u2014 check it out!"
+            Reactstrap.FormGroup,
+            null,
+            React.createElement(
+                Reactstrap.Label,
+                {"for": "password"},
+                "Password"
+            ),
+            React.createElement(Reactstrap.Input, {
+                type: "password",
+                name: "password",
+                id: "password",
+                placeholder: "enter your password"
+            })
         ),
         React.createElement(
-            Reactstrap.Alert,
-            {color: "success"},
-            "This is a success Reactstrap.Alert \u2014 check it out!"
-        ),
-        React.createElement(
-            Reactstrap.Alert,
-            {color: "danger"},
-            "This is a danger Reactstrap.Alert \u2014 check it out!"
-        ),
-        React.createElement(
-            Reactstrap.Alert,
-            {color: "warning"},
-            "This is a warning Reactstrap.Alert \u2014 check it out!"
-        ),
-        React.createElement(
-            Reactstrap.Alert,
-            {color: "info"},
-            "This is a info Reactstrap.Alert \u2014 check it out!"
-        ),
-        React.createElement(
-            Reactstrap.Alert,
-            {color: "light"},
-            "This is a light Reactstrap.Alert \u2014 check it out!"
-        ),
-        React.createElement(
-            Reactstrap.Alert,
-            {color: "dark"},
-            "This is a dark Reactstrap.Alert \u2014 check it out!"
+            Reactstrap.Button,
+            "/login",
+            "Submit"
         )
     );
 };

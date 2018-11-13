@@ -1,63 +1,68 @@
 package com.yazabara.demoaugust2018.service;
 
-import com.yazabara.demoaugust2018.DemoAugust2018Application;
-import com.yazabara.demoaugust2018.config.security.SecurityRoles;
-import com.yazabara.demoaugust2018.exceptions.UserNotFoundException;
+import com.yazabara.demoaugust2018.model.db.DbExercise;
+import com.yazabara.demoaugust2018.model.db.DbTraining;
 import com.yazabara.demoaugust2018.model.db.DbUser;
-import com.yazabara.demoaugust2018.repo.UserRepository;
+import com.yazabara.demoaugust2018.model.db.DbWorkoutSet;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.Optional;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Random;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
+import static org.mockito.Mockito.when;
 
-@ActiveProfiles("workout-service")
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = DemoAugust2018Application.class)
+@RunWith(MockitoJUnitRunner.StrictStubs.class)
 public class WorkoutServiceTest {
 
-    @Autowired
+    @Mock
+    private UserAccountService userAccountService;
+
+    @InjectMocks
     private WorkoutService workoutService;
 
-    @Autowired
-    @Qualifier("userRepositoryMock")
-    private UserRepository userRepository;
-
-    @Test(expected = UserNotFoundException.class)
-    public void getUserDataByIdShouldThrowException() {
-        workoutService.getUserDataById(1);
-    }
 
     @Test
-    public void getUserDataByIdShouldWorksCorrect() {
-        DbUser dbUser = new DbUser().withId(1);
-        Mockito.when(userRepository.findById(dbUser.getUserId())).then((Answer<Optional<DbUser>>) invocationOnMock -> Optional.of(dbUser));
+    public void addTrainingShouldWorkCorrect() {
+        DbTraining training = new DbTraining()
+                .withName("First training")
+                .withDate(new Date());
 
-        assertThat(workoutService.getUserDataById(dbUser.getUserId()), is(dbUser));
-    }
+        training.setExercises(Arrays.asList(
+                new DbExercise()
+                        .withName("Jim bleat")
+                        .withDescription("Base exercise")
+                        .withTraining(training),
+                new DbExercise()
+                        .withName("Stanovay bleat")
+                        .withDescription("Base exercise")
+                        .withTraining(training)
+                        .withWorkoutSets(Arrays.asList(
+                                new DbWorkoutSet()
+                                        .withDuration(10)
+                                        .withWeight(100)
+                                        .withRepetitions(6),
+                                new DbWorkoutSet()
+                                        .withDuration(10)
+                                        .withWeight(120)
+                                        .withRepetitions(7)
+                        ))
+        ));
+        DbUser user = new DbUser()
+                .withId(new Random().nextInt())
+                .withUsername("user")
+                .withPassword("user")
+                .withTrainings(Collections.singletonList(training));
 
-    @Test
-    public void addUserShouldAddCorrect() {
-        DbUser dbUser = new DbUser()
-                .withUsername("test1")
-                .withPassword("password")
-                .withId(1)
-                .withRole(SecurityRoles.USER);
+        when(userAccountService.getUserDataById(user.getUserId()))
+                .then((Answer<DbUser>) invocationOnMock -> user);
 
-        Mockito.when(userRepository.save(dbUser)).then((Answer<DbUser>) invocationOnMock -> dbUser);
-        Mockito.when(userRepository.findById(dbUser.getUserId())).then((Answer<Optional<DbUser>>) invocationOnMock -> Optional.of(dbUser));
-
-        workoutService.addUser(dbUser);
-
-        assertThat(workoutService.getUserDataById(dbUser.getUserId()), is(dbUser));
+        workoutService.addTrainings(user.getUserId(), training);
     }
 }
